@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deslizar para a Direita</title>
+<style>
+    #deslizavel {
+        width: 200px;
+        height: 200px;
+        background-color: lightblue;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: transform 0.3s ease;
+    }
+</style>
+</head>
+<body>
+
+<div id="deslizavel">Deslize para a direita para desaparecer</div>
+
+<script>
+    // Seleciona a div deslizável
+    var divDeslizavel = document.getElementById('deslizavel');
+
+    // Variáveis para guardar as posições iniciais e finais do toque
+    var startX, endX;
+
+    // Adiciona um event listener para quando o usuário tocar na div
+    divDeslizavel.addEventListener('touchstart', function(event) {
+        // Guarda a posição inicial do toque
+        startX = event.touches[0].clientX;
+    });
+
+    // Adiciona um event listener para quando o usuário mover o dedo
+    divDeslizavel.addEventListener('touchmove', function(event) {
+        // Guarda a posição final do toque
+        endX = event.touches[0].clientX;
+
+        // Calcula a diferença de distância que o dedo percorreu
+        var deltaX = endX - startX;
+
+        // Move a div na direção horizontal do deslizamento
+        divDeslizavel.style.transform = 'translateX(' + deltaX + 'px)';
+    });
+
+    // Adiciona um event listener para quando o usuário levantar o dedo
+    divDeslizavel.addEventListener('touchend', function(event) {
+        // Se a div foi deslocada para a direita em pelo menos 100px
+        if (deltaX > 100) {
+            // Remove a div do DOM
+            divDeslizavel.style.display = 'none';
+        } else {
+            // Retorna a div à sua posição inicial
+            divDeslizavel.style.transform = 'translateX(0)';
+        }
+    });
+</script>
+
+</body>
+</html>
